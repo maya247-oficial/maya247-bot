@@ -1,0 +1,21 @@
+const { Telegraf } = require("telegraf");
+const axios = require("axios");
+
+const bot = new Telegraf("7616207171:AAH79mAHFlaYK1oxQWuYn5pZHsM73-__SCo"); // Reemplázalo aquí
+
+bot.on("text", async (ctx) => {
+  try {
+    // Envía el mensaje a Ziper (ajusta la URL)
+    const respuesta = await axios.post("https://hooks.zapier.com/hooks/catch/21421905/2fm9vkt/", {
+      message: ctx.message.text,
+      user_id: ctx.chat.id,
+    });
+    
+    // Responde al usuario con la IA
+    ctx.reply(respuesta.data);
+  } catch (error) {
+    ctx.reply("🚨 ¡Ups! Algo falló. Intenta de nuevo.");
+  }
+});
+
+bot.launch();
